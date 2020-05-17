@@ -12,6 +12,9 @@
 		CE19EAF4246FAAAF006DEF20 /* QuestionGroupCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE19EAF2246FAAAF006DEF20 /* QuestionGroupCell.xib */; };
 		CE19EAF9246FB35B006DEF20 /* DependencyInjectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE19EAF8246FB35B006DEF20 /* DependencyInjectable.swift */; };
 		CE19EAFB246FB370006DEF20 /* BaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE19EAFA246FB370006DEF20 /* BaseCell.swift */; };
+		CE19EAFE24718B69006DEF20 /* QuestionStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE19EAFD24718B69006DEF20 /* QuestionStrategy.swift */; };
+		CE19EB0024718C5E006DEF20 /* SequentialQuestionStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE19EAFF24718C5E006DEF20 /* SequentialQuestionStrategy.swift */; };
+		CE19EB0224718D48006DEF20 /* RandomQuestionStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE19EB0124718D48006DEF20 /* RandomQuestionStrategy.swift */; };
 		CED2BD58246807D3000D2645 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED2BD57246807D3000D2645 /* AppDelegate.swift */; };
 		CED2BD5A246807D3000D2645 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED2BD59246807D3000D2645 /* SceneDelegate.swift */; };
 		CED2BD5C246807D3000D2645 /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED2BD5B246807D3000D2645 /* QuestionViewController.swift */; };
@@ -30,6 +33,9 @@
 		CE19EAF2246FAAAF006DEF20 /* QuestionGroupCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QuestionGroupCell.xib; sourceTree = "<group>"; };
 		CE19EAF8246FB35B006DEF20 /* DependencyInjectable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyInjectable.swift; sourceTree = "<group>"; };
 		CE19EAFA246FB370006DEF20 /* BaseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCell.swift; sourceTree = "<group>"; };
+		CE19EAFD24718B69006DEF20 /* QuestionStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionStrategy.swift; sourceTree = "<group>"; };
+		CE19EAFF24718C5E006DEF20 /* SequentialQuestionStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequentialQuestionStrategy.swift; sourceTree = "<group>"; };
+		CE19EB0124718D48006DEF20 /* RandomQuestionStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomQuestionStrategy.swift; sourceTree = "<group>"; };
 		CED2BD54246807D3000D2645 /* EnglishWords.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EnglishWords.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CED2BD57246807D3000D2645 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CED2BD59246807D3000D2645 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -64,6 +70,16 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
+		CE19EAFC24718B37006DEF20 /* Strategies */ = {
+			isa = PBXGroup;
+			children = (
+				CE19EAFD24718B69006DEF20 /* QuestionStrategy.swift */,
+				CE19EAFF24718C5E006DEF20 /* SequentialQuestionStrategy.swift */,
+				CE19EB0124718D48006DEF20 /* RandomQuestionStrategy.swift */,
+			);
+			path = Strategies;
+			sourceTree = "<group>";
+		};
 		CED2BD4B246807D3000D2645 = {
 			isa = PBXGroup;
 			children = (
@@ -83,6 +99,7 @@
 		CED2BD56246807D3000D2645 /* EnglishWords */ = {
 			isa = PBXGroup;
 			children = (
+				CE19EAFC24718B37006DEF20 /* Strategies */,
 				CE19EAF7246FB350006DEF20 /* Protocols */,
 				CED2BD6C24680815000D2645 /* Controllers */,
 				CED2BD6B24680803000D2645 /* Models */,
@@ -210,9 +227,12 @@
 				CED2BD5C246807D3000D2645 /* QuestionViewController.swift in Sources */,
 				CED2BD722468094C000D2645 /* QuestionGroupData.swift in Sources */,
 				CE19EAF9246FB35B006DEF20 /* DependencyInjectable.swift in Sources */,
+				CE19EAFE24718B69006DEF20 /* QuestionStrategy.swift in Sources */,
+				CE19EB0024718C5E006DEF20 /* SequentialQuestionStrategy.swift in Sources */,
 				CED2BD7A24680A39000D2645 /* QuestionView.swift in Sources */,
 				CED2BD78246809CE000D2645 /* QuestionGroup.swift in Sources */,
 				CE19EAF3246FAAAF006DEF20 /* QuestionGroupCell.swift in Sources */,
+				CE19EB0224718D48006DEF20 /* RandomQuestionStrategy.swift in Sources */,
 				CE19EAFB246FB370006DEF20 /* BaseCell.swift in Sources */,
 				CED2BD58246807D3000D2645 /* AppDelegate.swift in Sources */,
 				CE19EAF0246F92FE006DEF20 /* SelectQuestionGroupViewController.swift in Sources */,

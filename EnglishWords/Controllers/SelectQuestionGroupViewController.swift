@@ -45,10 +45,10 @@ extension SelectQuestionGroupViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        //let strategy = RandomQuestionStrategy(questionGroup: selectedQuestionGroup)
+        let strategy = SequentialQuestionStrategy(questionGroup: selectedQuestionGroup)
+        let viewController = QuestionViewController.make(withDependency: strategy)
         
-        let viewController = QuestionViewController.make(withDependency: ())
-        
-        viewController.questionGroup = selectedQuestionGroup
         viewController.delegate = self
         
         self.navigationController?.pushViewController(viewController, animated: true)
@@ -78,11 +78,11 @@ extension SelectQuestionGroupViewController: UITableViewDataSource {
 // MARK: - QuestionViewControllerDelegate
 
 extension SelectQuestionGroupViewController: QuestionViewControllerDelegate {
-    func questionViewController(_ viewController: QuestionViewController, didComplete questionGroup: QuestionGroup) {
+    func questionViewController(_ viewController: QuestionViewController, didComplete questionGroup: QuestionStrategy) {
         navigationController?.popToViewController(self, animated: true)
     }
     
-    func questionViewController(_ viewController: QuestionViewController, didCancel questionGroup: QuestionGroup, at questionIndex: Int) {
+    func questionViewController(_ viewController: QuestionViewController, didCancel questionGroup: QuestionStrategy, at questionIndex: Int) {
         navigationController?.popToViewController(self, animated: true)
     }
 }

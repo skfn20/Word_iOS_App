@@ -10,9 +10,9 @@ import UIKit
 
 protocol QuestionViewControllerDelegate: class {
     
-    func questionViewController(_ viewController: QuestionViewController, didCancel questionGroup: QuestionGroup, at questionIndex: Int)
+    func questionViewController(_ viewController: QuestionViewController, didCancel questionGroup: QuestionStrategy, at questionIndex: Int)
     
-    func questionViewController(_ viewController: QuestionViewController, didComplete questionGroup: QuestionGroup)
+    func questionViewController(_ viewController: QuestionViewController, didComplete questionGroup: QuestionStrategy)
 }
 
 final class QuestionViewController: UIViewController {
@@ -22,11 +22,12 @@ final class QuestionViewController: UIViewController {
     
     weak var delegate: QuestionViewControllerDelegate?
     
-    var questionGroup: QuestionGroup! {
+    var questionStrategy: QuestionStrategy! {
         didSet {
-            navigationItem.title = questionGroup.title
+            navigationItem.title = questionStrategy.title 
         }
     }
+
     var questionIndex = 0
     
     private lazy var questionIndexItem: UIBarButtonItem = {
@@ -72,7 +73,7 @@ extension QuestionViewController {
     }
     
     private func showQuestion() {
-        let question = questionGroup.questions[questionIndex]
+        let question = questionStrategy.currentQuestion()
 
         questionView.answerLabel.text = question.answer
         questionView.promptLabel.text = question.prompt
@@ -81,12 +82,12 @@ extension QuestionViewController {
         questionView.answerLabel.isHidden = true
         questionView.hintLabel.isHidden = true
         
-        questionIndexItem.title = "\(questionIndex + 1)/" + "\(questionGroup.questions.count)"
+        questionIndexItem.title = questionStrategy.questionIndexTitle()
     }
     
     private func showNextQuestion() {
         questionIndex += 1
-        guard questionIndex < questionGroup.questions.count  else {
+        guard questionStrategy.advanceToNextQuestion() else {
             let title = "더 이상 풀 문제가 없습니다.."
             let message = "그만하시겠습니까?"
             
@@ -94,6 +95,7 @@ extension QuestionViewController {
             
             return
         }
+        
         showQuestion()
     }
     
@@ -103,7 +105,7 @@ extension QuestionViewController {
         let okButton = UIAlertAction(title: "OK", style: .default) { [weak self] _ in
             guard let self = self else { return }
             
-            self.delegate?.questionViewController(self, didComplete: self.questionGroup)
+            self.delegate?.questionViewController(self, didComplete: self.questionStrategy)
         }
         
         alert.addAction(okButton)
@@ -122,7 +124,7 @@ extension QuestionViewController {
     }
     
     @objc private func handleCancelPressed(sender: UIBarButtonItem) {
-        delegate?.questionViewController(self, didCancel: questionGroup, at: questionIndex)
+        delegate?.questionViewController(self, didCancel: questionStrategy, at: questionIndex)
     }
 }
 
@@ -136,30 +138,33 @@ extension QuestionViewController {
     }
     
     @objc private func handleCorrect(_ sender: Any) {
-        guard questionIndex < questionGroup.questions.count else { return }
+        let question = questionStrategy.currentQuestion()
         
-        correctCount += 1
-        questionView.correctCountLabel.text = "\(correctCount)"
+        questionStrategy.markQuestionCorrect(question)
+        questionView.correctCountLabel.text = String(questionStrategy.correctCount)
+
         
         showNextQuestion()
     }
     
     @objc private func handleInCorrect(_ sender: Any) {
-        guard questionIndex < questionGroup.questions.count else { return }
+        let question = questionStrategy.currentQuestion()
         
-        incorrectCount += 1
-        questionView.incorrectCountLabel.text = "\(incorrectCount)"
+        questionStrategy.markQuestionIncorrect(question)
+        questionView.incorrectCountLabel.text = String(questionStrategy.incorrectCount)
         
         showNextQuestion()
     }
 }
 
 extension QuestionViewController: DependencyInjectable {
-    typealias Dependency = Void
+    typealias Dependency = QuestionStrategy
     
     static func make(withDependency dependency: Dependency) -> QuestionViewController {
         let viewController = UIStoryboard(name: "Main", bundle: nil)
             .instantiateViewController(withIdentifier: "QuestionViewController") as! QuestionViewController
+        
+        viewController.questionStrategy = dependency
         
         return viewController
     }
